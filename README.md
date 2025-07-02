@@ -56,6 +56,36 @@ app.use(cookieparser()); :
 - serverStart() is an async function that handles the startup process of the Express server. Inside the function it waits for the database to connect from the await dataBaseConnection(). This ensures that the server only starts after the connection is established.
 - app.listen(PORT, () => {...} starts the Express server on the specified PORT environment variable. A console.log will deliver a message upon successfully starting the server.
 
+### models/user.ts
+
+- `export interface IUser extends mongoose.Document{
+    username: string;
+    password: string;
+    createdAt?: Date; 
+}`
+- This IUser interface will extend to the Document aspect of mongoose. This means any User Document will have all the properties and methods provided by Mongoose. As a result the user must have the properties of Username, Password, and an optional createdAt (relates to timestamps:true in the userSchema)
+
+- const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        minlength: 3 
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 8, 
+        maxlength: 75 
+    }
+}, {timestamps: true}); 
+
+- This is the userSchema that defines the structure for the User Documents in mongoose. These properties are type defined and have rules that follow respective to their property. The properties are as follows: Username, Password, and timestamps.
+- username: Typed as string, is mandatory, minimum length is 3 characters, and NO two users can share the same name.
+- password: Typed as string, is mandatory, minimum lenght is 8 characters, maximum length is 75 characters if you're about that.
+- the timestamps option tells Mongoose to automatically add the createdAt and updatedAt fields to each document, which assists in tracking for when users are created or updated.
+
+
 
 
 
