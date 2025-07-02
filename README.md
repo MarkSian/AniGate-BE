@@ -85,7 +85,10 @@ app.use(cookieparser()); :
 - password: Typed as string, is mandatory, minimum lenght is 8 characters, maximum length is 75 characters if you're about that.
 - the timestamps option tells Mongoose to automatically add the createdAt and updatedAt fields to each document, which assists in tracking for when users are created or updated.
 
-
+- const User = mongoose.model<IUser>('User', userSchema);
+- This creates a model used by Mongoose based upon the structure set by userSchema and bound by the type checking set by the interface of IUser.
+- A model is a class that provides an interface to interact with a specified MongoDB collection (Users in this case).
+- <IUser> will tell the model to follow this interface. 
 
 
 

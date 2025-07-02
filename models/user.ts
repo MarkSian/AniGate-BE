@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 // User Interface extneding to mongoose document
 export interface IUser extends mongoose.Document{
     username: string;
@@ -22,3 +23,9 @@ const userSchema = new mongoose.Schema({
         maxlength: 75 // maximum length for password
     }
 }, {timestamps: true}); // will add createdAt and updatedAt fields to the schema
+
+
+
+// Create Const User from the userSchema and export it
+const User = mongoose.model<IUser>('User', userSchema);
+export default User;
