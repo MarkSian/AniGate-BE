@@ -85,6 +85,18 @@ app.use(cookieparser()); :
 - password: Typed as string, is mandatory, minimum lenght is 8 characters, maximum length is 75 characters if you're about that.
 - the timestamps option tells Mongoose to automatically add the createdAt and updatedAt fields to each document, which assists in tracking for when users are created or updated.
 
+- Hash Password Before Saving The User
+- userSchema.pre<IUser>('save', async function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
+- This function checks if the password field has been modified using this.isModified('password). If the password has not changed, it will use next() to continue the next operation of the function and does not re-hash the password.
+- However, if the password has been modified, which in this case is only upon creating a new user, it will then hash the password.
+- It will use bcrypt.hash to hash the password (this.password) with 10 salt rounds. nect(); will then be called to proceed to save the document.
+
 - const User = mongoose.model<IUser>('User', userSchema);
 - This creates a model used by Mongoose based upon the structure set by userSchema and bound by the type checking set by the interface of IUser.
 - A model is a class that provides an interface to interact with a specified MongoDB collection (Users in this case).

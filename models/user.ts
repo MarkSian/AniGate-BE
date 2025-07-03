@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 
 // User Interface extneding to mongoose document
@@ -24,7 +25,14 @@ const userSchema = new mongoose.Schema({
     }
 }, {timestamps: true}); // will add createdAt and updatedAt fields to the schema
 
-
+// Hash Password Before Saving The User
+userSchema.pre<IUser>('save', async function (next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
 
 // Create Const User from the userSchema and export it
 const User = mongoose.model<IUser>('User', userSchema);
