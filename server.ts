@@ -7,6 +7,7 @@ import cookieparser from 'cookie-parser';
 
 
 // Import Routes and Middleware
+import authRoutes from './routes/authRoutes';
 
 
 // Load environment variables from .env
@@ -31,6 +32,9 @@ app.use(cookieparser());
 
 // Routes
 
+// Authenticatoin Routes ( /api/auth/register, /api/auth/login )
+app.use('/api/auth', authRoutes);
+console.log('typeof authRoutes:', typeof authRoutes);
 
 // Database Connection
 const dataBaseConnection  = async () => {

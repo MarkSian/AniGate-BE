@@ -32,7 +32,7 @@ userSchema.pre<IUser>('save', async function (next) {
     }
     this.password = await bcrypt.hash(this.password, 10);
     next();
-})
+});
 
 // Create Const User from the userSchema and export it
 const User = mongoose.model<IUser>('User', userSchema);
