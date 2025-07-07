@@ -100,7 +100,25 @@ app.use(cookieparser()); :
 - const User = mongoose.model<IUser>('User', userSchema);
 - This creates a model used by Mongoose based upon the structure set by userSchema and bound by the type checking set by the interface of IUser.
 - A model is a class that provides an interface to interact with a specified MongoDB collection (Users in this case).
-- <IUser> will tell the model to follow this interface. 
+- <IUser> will tell the model to follow this interface.
+
+
+### routes/authRoutes.ts
+- router.post('/register', async (req: Request, res: Response)=> { try { const { username, password } = req.body; ... 
+- Sets register endpoint to handle POST requests and expects a request body with a username and password
+- if (!username || !password) {
+            return res.status(400).json({error: 'Username and Password are Required'})
+        }
+    - If statement to check if username and password are provided, if not, it returns a 400 status code with an error message. 
+- const existingUser = await User.findOne({ username});
+        if (existingUser) {
+            return res.status(400).json({error: 'Username Already Exists'})
+        }
+    - const existingUser will check if the username already exists in the database, if it does, it returns a 400 status code with an error message.
+- const newUser = new User({ username, password}); Automatically From The User Model Import
+        await newUser.save();
+        res.status(201).json({ message: 'User Registered Successful!'});
+    - Create a new User using the User model from user.ts file and await for it to save to the database
 
 
 

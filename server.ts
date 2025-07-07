@@ -34,7 +34,6 @@ app.use(cookieparser());
 
 // Authenticatoin Routes ( /api/auth/register, /api/auth/login )
 app.use('/api/auth', authRoutes);
-console.log('typeof authRoutes:', typeof authRoutes);
 
 // Database Connection
 const dataBaseConnection  = async () => {
