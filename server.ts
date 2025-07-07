@@ -4,14 +4,15 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieparser from 'cookie-parser';
 
+// Load environment variables from .env
+dotenv.config(); 
 
 
 // Import Routes and Middleware
 import authRoutes from './routes/authRoutes';
 
 
-// Load environment variables from .env
-dotenv.config(); 
+
 
 // Type Delclarations For Environment Variables
 const CLIENT_URL = process.env.CLIENT_URL as string;
