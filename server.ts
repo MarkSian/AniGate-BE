@@ -10,6 +10,8 @@ dotenv.config();
 
 // Import Routes and Middleware
 import authRoutes from './routes/authRoutes';
+import aniGate from './routes/aniGateRoutes';
+import { authenticateToken } from './middleware/authMiddleware';
 
 
 
@@ -35,6 +37,10 @@ app.use(cookieparser());
 
 // Authenticatoin Routes ( /api/auth/register, /api/auth/login )
 app.use('/api/auth', authRoutes);
+
+// AniGate Specific Routes (e.g., /api/aniGate/register, /api/aniGate/login)
+// These routes will be protected by the authenticateToken middleware, ensuring that only authenticated users can access them.
+app.use('/api/aniGate', authenticateToken, aniGate);
 
 // Database Connection
 const dataBaseConnection  = async () => {
