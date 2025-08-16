@@ -9,6 +9,9 @@ const router = express.Router();
 // Type Delclarations For Environment Variables
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
+
+
+
 /**
  * @route POST /api/auth/register
  * @desc Register a new user

@@ -4,6 +4,23 @@ import AniGate from '../models/aniGate';
 
 const router = express.Router();
 
+
+/**
+ * @route GET /api/aniGate/favorite
+ * @desc Get all favorited anime for the logged-in user
+ * @access Private (requires JWT)
+ */
+router.get('/favorite', async (req: Request, res: Response) => {
+    try {
+        const user = req.userId;
+        const favorites = await AniGate.find({ user });
+        res.status(200).json(favorites);
+    } catch (err) {
+        res.status(500).json({ error: 'Server Error While Fetching Favorites' });
+    }
+});
+
+
 /**
  * @route POST /api/aniGate/favorite
  * @desc Add an anime to the user's favorites
