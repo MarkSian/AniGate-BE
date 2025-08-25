@@ -5,12 +5,12 @@ import cors from 'cors';
 import cookieparser from 'cookie-parser';
 
 // Load environment variables from .env
-dotenv.config(); 
+dotenv.config();
 
 
 // Import Routes and Middleware
 import authRoutes from './routes/authRoutes';
-import aniGate from './routes/aniGateRoutes';
+import aniGateRoutes from './routes/aniGateRoutes';
 import { authenticateToken } from './middleware/authMiddleware';
 
 
@@ -19,19 +19,19 @@ import { authenticateToken } from './middleware/authMiddleware';
 // Type Delclarations For Environment Variables
 const CLIENT_URL = process.env.CLIENT_URL as string;
 const MONGO_URI = process.env.MONGO_URI as string;
-const PORT = Number(process.env.PORT) || 5000; 
+const PORT = Number(process.env.PORT) || 5000;
 
 // Create the Express Application
-const app = express(); 
+const app = express();
 
 // Connect to Frontend Client URL
-app.use(cors({origin: CLIENT_URL, credentials: true})); 
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
 
 // Parse JSON Request Bodies
-app.use(express.json()); 
+app.use(express.json());
 
 // Parse HTTP-Only cookies
-app.use(cookieparser()); 
+app.use(cookieparser());
 
 // Routes
 
@@ -40,14 +40,14 @@ app.use('/api/auth', authRoutes);
 
 // AniGate Specific Routes (e.g., /api/aniGate/register, /api/aniGate/login)
 // These routes will be protected by the authenticateToken middleware, ensuring that only authenticated users can access them.
-app.use('/api/aniGate', authenticateToken, aniGate);
+app.use('/api/aniGate', authenticateToken, aniGateRoutes);
 
 // Database Connection
-const dataBaseConnection  = async () => {
+const dataBaseConnection = async () => {
     try {
         await mongoose.connect(MONGO_URI);
         console.log('Connected to Database Successfully...');
-        
+
     } catch (err) {
         console.error('Database connection error:', err);
     }
